@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ameer Mahmoud — Flutter Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#060608;--s2:#13131c;--accent:#00d4ff;--accent2:#7c3aed;--accent3:#f59e0b;
+  --text:#f0f0f8;--muted:#6b6b88;--border:rgba(255,255,255,0.06);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+.cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,212,255,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.25s cubic-bezier(.25,.46,.45,.94),border-color 0.2s;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.4;}
+.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;}
+.orb1{width:600px;height:600px;background:rgba(124,58,237,0.08);top:-200px;right:-200px;}
+.orb2{width:500px;height:500px;background:rgba(0,212,255,0.06);bottom:-100px;left:-150px;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(20px);background:rgba(6,6,8,0.7);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-size:0.82rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--accent);}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;border:1px solid rgba(0,212,255,0.25);background:rgba(0,212,255,0.06);font-size:0.75rem;font-weight:500;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:32px;animation:fadeUp 0.6s ease both;}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:28px;animation:fadeUp 0.6s 0.1s ease both;}
+.hero h1 .line2{display:block;background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-desc{font-size:1.05rem;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:44px;font-weight:300;animation:fadeUp 0.6s 0.2s ease both;}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:12px;font-size:0.9rem;font-weight:500;cursor:none;text-decoration:none;transition:all 0.25s;border:none;font-family:'DM Sans',sans-serif;}
+.btn-primary{background:var(--accent);color:#000;box-shadow:0 0 30px rgba(0,212,255,0.3);}
+.btn-primary:hover{box-shadow:0 0 50px rgba(0,212,255,0.5);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+
+.stats{display:flex;gap:48px;flex-wrap:wrap;padding:40px 48px;max-width:1100px;margin:0 auto;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--accent);letter-spacing:-1px;}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+
+section{max-width:1100px;margin:0 auto;padding:80px 48px;position:relative;z-index:1;}
+.section-label{font-size:0.72rem;font-weight:600;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent);}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:48px;line-height:1.1;}
+
+.exp-card{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:36px;transition:all 0.3s;position:relative;overflow:hidden;}
+.exp-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,0.04) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;}
+.exp-card:hover::before{opacity:1;}
+.exp-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-3px);}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.exp-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;}
+.exp-role{color:var(--accent);font-size:0.9rem;font-weight:500;margin-top:4px;}
+.exp-date{font-size:0.78rem;color:var(--muted);padding:5px 12px;border:1px solid var(--border);border-radius:100px;white-space:nowrap;}
+.exp-platforms{display:flex;gap:8px;margin-bottom:16px;}
+.platform-tag{font-size:0.72rem;padding:3px 10px;border-radius:6px;font-weight:500;background:rgba(124,58,237,0.15);color:#a78bfa;border:1px solid rgba(124,58,237,0.2);}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.exp-bullets li{font-size:0.88rem;color:var(--muted);line-height:1.6;padding-left:16px;position:relative;}
+.exp-bullets li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:0.75rem;top:2px;}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+.project-card{background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+.project-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.project-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.project-card:hover::after{transform:scaleX(1);}
+.project-num{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:2px;margin-bottom:16px;}
+.project-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:12px;}
+.project-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;flex:1;}
+.project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;}
+.project-tag{font-size:0.7rem;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);}
+.project-links{display:flex;gap:10px;margin-top:16px;}
+.project-link{font-size:0.75rem;color:var(--accent);text-decoration:none;transition:opacity 0.2s;}
+.project-link:hover{opacity:0.7;}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+.skill-group{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all 0.25s;}
+.skill-group:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-2px);}
+.skill-group-name{font-size:0.72rem;font-weight:600;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.skill-list{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-chip{font-size:0.78rem;color:var(--text);padding:4px 10px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border);}
+
+.certs-list{display:flex;flex-direction:column;gap:12px;}
+.cert-item{display:flex;align-items:center;gap:16px;padding:18px 24px;background:var(--s2);border:1px solid var(--border);border-radius:12px;transition:all 0.25s;}
+.cert-item:hover{border-color:rgba(245,158,11,0.3);transform:translateX(4px);}
+.cert-icon{width:36px;height:36px;border-radius:10px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.cert-name{font-size:0.88rem;font-weight:500;}
+.cert-issuer{font-size:0.76rem;color:var(--muted);margin-top:2px;}
+.cert-year{font-size:0.75rem;color:var(--muted);margin-left:auto;}
+
+.contact-card{background:var(--s2);border:1px solid var(--border);border-radius:24px;padding:60px;text-align:center;position:relative;overflow:hidden;}
+.contact-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(0,212,255,0.06) 0%,transparent 70%);}
+.contact-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:16px;position:relative;}
+.contact-sub{font-size:1rem;color:var(--muted);margin-bottom:40px;position:relative;}
+.contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;position:relative;}
+.contact-link{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);text-decoration:none;font-size:0.88rem;font-weight:500;transition:all 0.25s;cursor:none;}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,0.06);}
+
+footer{text-align:center;padding:32px 48px;border-top:1px solid var(--border);font-size:0.8rem;color:var(--muted);position:relative;z-index:1;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:0.05s;}.d2{transition-delay:0.1s;}.d3{transition-delay:0.15s;}
+.d4{transition-delay:0.2s;}.d5{transition-delay:0.25s;}.d6{transition-delay:0.3s;}
+
+@media(max-width:768px){
+  nav{padding:16px 24px;}.nav-links{display:none;}
+  .hero{padding:100px 24px 60px;}section{padding:60px 24px;}
+  .stats{padding:32px 24px;gap:32px;}.contact-card{padding:40px 24px;}
+  .hero h1{letter-spacing:-1.5px;}body{cursor:auto;}.cursor,.cursor-ring{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<nav>
+  <div class="nav-logo">ameer<span>.</span>dev</div>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Available for work</div>
+    <h1>Ameer<span class="line2">Mahmoud</span></h1>
+    <p class="hero-desc">Flutter Developer & UI/UX Designer crafting high-performance mobile experiences with clean architecture and pixel-perfect design.</p>
+    <div class="hero-cta">
+      <a href="mailto:amermahmoud2003@gmail.com" class="btn btn-primary">Get in Touch →</a>
+      <a href="https://github.com/Ameer-Mahmoud" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Apps Shipped</div></div>
+  <div class="stat-item"><div class="stat-num">6mo</div><div class="stat-label">Flutter Diploma</div></div>
+  <div class="stat-item"><div class="stat-num">145h</div><div class="stat-label">ITI Training</div></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Languages</div></div>
+</div>
+
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Work History</h2>
+  <div class="exp-card reveal">
+    <div class="exp-header">
+      <div>
+        <div class="exp-title">Remember App</div>
+        <div class="exp-role">Freelance Flutter Developer — Independent Project</div>
+      </div>
+      <div class="exp-date">Released Jan 2026</div>
+    </div>
+    <div class="exp-platforms">
+      <span class="platform-tag">Web</span>
+      <span class="platform-tag">Windows</span>
+      <span class="platform-tag">Android</span>
+    </div>
+    <ul class="exp-bullets">
+      <li>Built a cross-platform productivity and finance tracking app with a clean, premium UI and scalable feature-first architecture.</li>
+      <li>Implemented state management using Flutter BLoC (Cubit) with a unified shell enabling global navigation and search across features.</li>
+      <li>Designed a local-first data layer using Drift (SQLite), including safe migrations, data export (PDF/CSV), and multilingual support (AR/EN).</li>
+    </ul>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">Selected Work</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal d1">
+      <div class="project-num">01</div>
+      <div class="project-name">العب واكسب</div>
+      <div class="project-desc">Gaming app with AdMob monetization — banners, interstitials, rewarded ads. Full solo build including UI, logo, Firebase, and 9 ad units.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">Firebase</span><span class="project-tag">AdMob</span></div>
+      <div class="project-links"><a href="https://play.google.com/store/apps/details?id=com.ameer.playandwin" target="_blank" class="project-link">Google Play ↗</a></div>
+    </div>
+    <div class="project-card reveal d2">
+      <div class="project-num">02</div>
+      <div class="project-name">Qareeb App</div>
+      <div class="project-desc">All-in-one Islamic app with Quran, Hadith, Radio, Prayer Times, and Tasbeeh. Real-time REST APIs with Provider state management.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">REST API</span><span class="project-tag">Provider</span></div>
+      <div class="project-links"><a href="https://github.com/Ameer-Mahmoud" target="_blank" class="project-link">GitHub ↗</a></div>
+    </div>
+    <div class="project-card reveal d3">
+      <div class="project-num">03</div>
+      <div class="project-name">Evently App</div>
+      <div class="project-desc">Real-time event management with Firebase Firestore, AR/EN localization, dark/light mode, event filtering, favorites, and Google Maps.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">Firebase</span><span class="project-tag">Google Maps</span><span class="project-tag">Cubit</span></div>
+      <div class="project-links"><a href="https://github.com/Ameer-Mahmoud" target="_blank" class="project-link">GitHub ↗</a></div>
+    </div>
+    <div class="project-card reveal d4">
+      <div class="project-num">04</div>
+      <div class="project-name">News App</div>
+      <div class="project-desc">Real-time news with pagination, MVVM + BLoC, category browsing, keyword search, and offline caching.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">BLoC</span><span class="project-tag">REST API</span><span class="project-tag">MVVM</span></div>
+      <div class="project-links"><a href="https://github.com/Ameer-Mahmoud" target="_blank" class="project-link">GitHub ↗</a></div>
+    </div>
+    <div class="project-card reveal d5">
+      <div class="project-num">05</div>
+      <div class="project-name">Space App</div>
+      <div class="project-desc">3D planet models with model_viewer_plus, smooth PageView navigation and screen-to-screen data passing.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">3D Models</span><span class="project-tag">Animations</span></div>
+      <div class="project-links"><a href="https://github.com/Ameer-Mahmoud" target="_blank" class="project-link">GitHub ↗</a></div>
+    </div>
+    <div class="project-card reveal d6">
+      <div class="project-num">06</div>
+      <div class="project-name">Remember App</div>
+      <div class="project-desc">Cross-platform productivity & finance tracker. Feature-first architecture with Drift SQLite, PDF/CSV export, and full multilingual support.</div>
+      <div class="project-tags"><span class="project-tag">Flutter</span><span class="project-tag">Drift</span><span class="project-tag">Cubit</span><span class="project-tag">Multi-platform</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal d1"><div class="skill-group-name">Mobile Dev</div><div class="skill-list"><span class="skill-chip">Flutter</span><span class="skill-chip">Dart</span><span class="skill-chip">Android</span></div></div>
+    <div class="skill-group reveal d2"><div class="skill-group-name">State Management</div><div class="skill-list"><span class="skill-chip">BLoC</span><span class="skill-chip">Cubit</span><span class="skill-chip">Provider</span></div></div>
+    <div class="skill-group reveal d3"><div class="skill-group-name">Backend & Data</div><div class="skill-list"><span class="skill-chip">Firebase</span><span class="skill-chip">REST APIs</span><span class="skill-chip">SQLite</span><span class="skill-chip">Drift</span></div></div>
+    <div class="skill-group reveal d4"><div class="skill-group-name">Architecture</div><div class="skill-list"><span class="skill-chip">MVVM</span><span class="skill-chip">Clean Code</span><span class="skill-chip">OOP</span></div></div>
+    <div class="skill-group reveal d5"><div class="skill-group-name">Design & UI</div><div class="skill-list"><span class="skill-chip">Figma</span><span class="skill-chip">Responsive UI</span><span class="skill-chip">Animations</span></div></div>
+    <div class="skill-group reveal d6"><div class="skill-group-name">Tools</div><div class="skill-list"><span class="skill-chip">Git</span><span class="skill-chip">GitHub</span><span class="skill-chip">Android Studio</span></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Education</div>
+  <h2 class="section-title">Certifications</h2>
+  <div class="certs-list">
+    <div class="cert-item reveal d1"><div class="cert-icon">🎓</div><div><div class="cert-name">Flutter Diploma (6 months)</div><div class="cert-issuer">Route IT Training Center</div></div><div class="cert-year">Jun–Dec 2025</div></div>
+    <div class="cert-item reveal d2"><div class="cert-icon">🏛️</div><div><div class="cert-name">Flutter Summer Training — 145 Hours</div><div class="cert-issuer">ITI</div></div><div class="cert-year">Jul 2025</div></div>
+    <div class="cert-item reveal d3"><div class="cert-icon">💻</div><div><div class="cert-name">Mastering OOP (C++)</div><div class="cert-issuer">Mahara-Tech</div></div><div class="cert-year">2025</div></div>
+    <div class="cert-item reveal d4"><div class="cert-icon">🎨</div><div><div class="cert-name">UI/UX Design with Figma</div><div class="cert-issuer">Independent</div></div><div class="cert-year">2024</div></div>
+    <div class="cert-item reveal d5"><div class="cert-icon">🎓</div><div><div class="cert-name">B.Sc. Computer Science</div><div class="cert-issuer">Zagazig University — Expected Jul 2026</div></div><div class="cert-year">2026</div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-card reveal">
+    <h2 class="contact-title">Let's Build Something.</h2>
+    <p class="contact-sub">Open to freelance projects, collaborations, and full-time opportunities.</p>
+    <div class="contact-links">
+      <a href="mailto:amermahmoud2003@gmail.com" class="contact-link">✉ Email</a>
+      <a href="https://github.com/Ameer-Mahmoud" target="_blank" class="contact-link">⌥ GitHub</a>
+      <a href="tel:+201282418764" class="contact-link">✆ +20 128 241 8764</a>
+    </div>
+  </div>
+</section>
+
+<footer><p>© 2025 Ameer Mahmoud · Built with precision.</p></footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=(mx-4)+'px';cursor.style.top=(my-4)+'px';
+});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=(rx-18)+'px';ring.style.top=(ry-18)+'px';requestAnimationFrame(animRing);}
+animRing();
+document.querySelectorAll('a,.btn,.contact-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.transform='scale(1.8)';ring.style.borderColor='rgba(0,212,255,0.7)';});
+  el.addEventListener('mouseleave',()=>{ring.style.transform='scale(1)';ring.style.borderColor='rgba(0,212,255,0.4)';});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
